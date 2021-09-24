@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: docker-k8s-apidemo
+  name: docker-k8s-apidemo
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: docker-k8s-apidemo
+  template:
+    metadata:
+      name: docker-k8s-apidemo-deployment
+      labels:
+        app: docker-k8s-apidemo
+    spec:
+      containers:
+      - image: luizcssoares/dockerapidemo
+        name: docker-k8s-apidemo
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: docker-k8s-apidemo
+  name: docker-k8s-apidemo-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: docker_k8s-apidemo
+  type: LoadBalancer
