@@ -2,12 +2,13 @@
 pipeline {
     agent none    
     stages {
-       stage('build'){       
+       stage('Build'){       
           agent {
               docker { image 'maven' }
           } 
           steps{
-              sh 'mvn package -Dmaven.test.skip=true'
+              //sh 'mvn package -Dmaven.test.skip=true'
+              bat 'mvn package -Dmaven.test.skip=true'
           }       
        }
     }
