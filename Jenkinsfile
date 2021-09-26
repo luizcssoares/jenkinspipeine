@@ -3,7 +3,9 @@ pipeline {
     agent any    
     stages {
        stage('Build'){       
-          agent any
+          agent {
+              docker { image 'maven' }
+          } 
           steps{
               sh 'mvn package -Dmaven.test.skip=true'              
           }       
@@ -11,7 +13,7 @@ pipeline {
        stage('Docker Build') {
        agent any
        steps {
-          sh 'docker build -t target/dockerapidemo:latest .'
+          sh 'docker build -t luizcssoares/dockerapidemo:latest .'
        }
     }
 }
