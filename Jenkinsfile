@@ -13,7 +13,9 @@ pipeline {
        stage('Docker Build') {
        agent any
        steps {
-          sh 'docker build -t luizcssoares/dockerapidemo:latest .'
+         scripts { 
+           sh 'docker build -t luizcssoares/dockerapidemo:latest .'
+         }
        }
     }
 }
