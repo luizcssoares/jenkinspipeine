@@ -19,7 +19,7 @@ spec:
       - image: luizcssoares/dockerapidemo
         name: docker-k8s-apidemo
         ports:
-        - containerPort: 8080
+        - containerPort: 8088
 ---
 apiVersion: v1
 kind: Service
@@ -29,8 +29,8 @@ metadata:
   name: docker-k8s-apidemo-service
 spec:
   ports:
-    - port: 80
-      targetPort: 8080
+    - port: 88
+      targetPort: 8088
   selector:
     app: docker_k8s-apidemo
   type: LoadBalancer
