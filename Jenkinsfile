@@ -17,6 +17,13 @@ pipeline {
            sh 'docker build -t luizcssoares/dockerapidemo:latest .'
          }
        }
+       stage('Deploy to k8s'){
+         steps{
+           scripts {
+             sh 'kubectl apply -f docker-k8s-apidemo.yaml'
+           }
+         }
+       }
     }
 }
     
