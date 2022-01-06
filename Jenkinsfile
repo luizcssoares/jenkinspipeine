@@ -7,7 +7,7 @@ pipeline {
               sh 'mvn package -Dmaven.test.skip=true'              
           }
           post {
-              sucess {
+              success {
                  echo 'e tal e tal'
               }
           }       
