@@ -2,10 +2,15 @@
 pipeline {
     agent any    
     stages {
-       stage('Maven Build'){             
+       stage('Maven Build'){                 
           steps{
-              echo 'e tal e tal'              
+              sh 'mvn package -Dmaven.test.skip=true'              
+          }
+          post {
+              sucess {
+                 echo 'e tal e tal'
+              }
           }       
        }       
     }
-}
+  }
