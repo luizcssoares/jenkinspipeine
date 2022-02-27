@@ -25,7 +25,7 @@ spec:
             mountPath: jenkins_home  
       volumes: 
         - name: jenkins-home 
-          hostPath: 
+          hostPath:
             path: /C/WINDOWS/system32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/RestApiDemoPipeline/
             tipo: Directory        
 ---
