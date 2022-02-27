@@ -27,7 +27,7 @@ spec:
         - name: jenkins-home 
           hostPath:
             path: /C/WINDOWS/system32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/RestApiDemoPipeline/
-            tipo: Directory        
+            type: Directory        
 ---
 apiVersion: v1
 kind: Service
