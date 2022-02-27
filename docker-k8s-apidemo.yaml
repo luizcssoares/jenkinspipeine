@@ -20,6 +20,14 @@ spec:
         name: docker-k8s-apidemo
         ports:
         - containerPort: 8088
+        volumeMounts: 
+          - name: jenkins-home
+            mountPath: /var/jenkins_home  
+      volumes: 
+        - name: jenkins-home 
+          hostPath: 
+            caminho: /C/WINDOWS/system32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/RestApiDemoPipeline/
+            tipo: Directory        
 ---
 apiVersion: v1
 kind: Service
