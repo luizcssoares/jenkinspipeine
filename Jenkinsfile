@@ -1,35 +1,48 @@
-pipeline {
-    agent any 
-    enviroment {	
-	    registry = 'https://github.com/luizcssoares/jenkinspipeine.git'
-	    dockerhub_credentials = 'luizcssoares-ockerhub'
-	    docker_image = '' 	    
-    }     
-    stages {
-       stage('GIT push'){
-	  steps {
-             sh 'https://github.com/luizcssoares/jenkinspipeine.git' 		  
-	  }
-       }	    
-       stage('Maven Build'){               
-          steps{
-              sh 'mvn package -Dmaven.test.skip=true'              
-          }       
-       }       
-       stage('Docker Build') {
-          agent any
-          steps {
-             scripts { 
-                 sh 'docker build -t luizcssoares/dockerapidemo'+':$BUILD_NUMBER'
-             }
-          }
-       }
-       stage('Deploy to k8s'){
-          steps{
-             scripts {
-               sh 'kubectl apply -f docker-k8s-apidemo.yaml'
-             }
-          }
-       }
-    }
-  }
+pipeline {      
+      environment {
+	     registry = 'luizcssoares/apirestmessage'     
+             dockerhub_credentials = 'luizcssoares-dockerhub'
+	     docker_image = ''     
+      }	 
+      agent any
+      stages {	
+	      stage('GIT push') {
+		      steps{  
+		           git([ url: 'https://github.com/luizcssoares/ApiRestMessage.git', branch: 'master', credentialsId: 'luizcssoares'
+		      }
+	      }
+	      stage('Build Maven') {		
+		      steps {
+		           sh 'mvn package -Dmaven.test.skip=true'     
+		      }
+	      }	
+	      stage('Docker Build'){
+		      steps {
+			      script {     
+			            docker_image = docker.build registry + ":$BUILD_NUMBER"		           
+			      }
+		      }
+	      }	  	      	      
+	      stage('Deploy our image') {
+		      steps{
+			    script {
+				     docker.withRegistry( '', dockerhub_credentials ) {
+						  dockerImage.push("$BUILD_NUMBER")
+						  dockerImage.push('latest')
+					  }								
+			    }
+		      }
+	      }	   
+	      stage('Remove Images unused') {
+		     steps{
+			 sh "docker rmi $registry:$BUILD_NUMBER"
+			 sh "docker rmi $registry:latest"		 
+		     }
+	      }		  
+	      stage('Kubernetes'){
+		     steps {
+		           bat 'kubectl apply -f deployment.yml'
+		     }
+	      }	        
+      }  
+}
