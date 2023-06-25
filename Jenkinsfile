@@ -1,6 +1,6 @@
 pipeline {      
       environment {
-	     registry = 'luizcssoares/apirestmessage'     
+	     registry = 'luizcssoares/apirestmessage'    
              dockerhub_credentials = 'luizcssoares-dockerhub'
 	     docker_image = ''     
       }	 
