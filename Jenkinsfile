@@ -1,12 +1,18 @@
 pipeline {
-    agent {
-              docker { image 'maven' }
-          }     
+    agent any 
+    enviroment {	
+	    registry = 'https://github.com/luizcssoares/jenkinspipeine.git'
+	    dockerhub_credentials = 'luizcssoares-ockerhub'
+	    docker_image = '' 	    
+    }     
     stages {
+       stage('GIT push'){
+	  steps {
+             sh 'https://github.com/luizcssoares/jenkinspipeine.git' 		  
+	  }
+       }	    
        stage('Maven Build'){               
           steps{
-		      sh 'https://github.com/luizcssoares/jenkinspipeine.git' 
-		      sh 'mvn --version' 
               sh 'mvn package -Dmaven.test.skip=true'              
           }       
        }       
@@ -14,7 +20,7 @@ pipeline {
           agent any
           steps {
              scripts { 
-                 sh 'docker build -t luizcssoares/dockerapidemo:latest .'
+                 sh 'docker build -t luizcssoares/dockerapidemo'+':$BUILD_NUMBER'
              }
           }
        }
