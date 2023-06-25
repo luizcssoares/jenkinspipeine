@@ -8,7 +8,7 @@ pipeline {
       stages {	
 	      stage('GIT push') {
 		      steps{  
-		           git([ url: 'https://github.com/luizcssoares/ApiRestMessage.git', branch: 'master', credentialsId: 'luizcssoares'])
+		           git 'https://github.com/luizcssoares/ApiRestMessage.git'
 		      }
 	      }
 	      stage('Build Maven') {		
