@@ -1,7 +1,7 @@
 pipeline {      
       environment {
 	     registry = 'luizcssoares/apirestmessage'    
-             dockerhub_credentials = 'luizcssoares-dockerhub'
+             dockerhub_creentials = 'luizcssoares-dockerhub'
 	     docker_image = ''     
       }	 
       agent any
@@ -26,7 +26,7 @@ pipeline {
 	      stage('Deploy our image') {
 		      steps{
 			    script {
-				     docker.withRegistry( '', dockerhub_credentials ) {
+				     docker.withRegistry( '', dockerhub_creentials ) {
 			              docker_image.push()
 			          }						
 			    }
