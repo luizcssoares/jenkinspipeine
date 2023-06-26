@@ -2,43 +2,35 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: docker-k8s-apidemo
-  name: docker-k8s-apidemo
+    app: docker-k8s-apimessage
+  name: docker-k8s-apimessage
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: docker-k8s-apidemo
+      app: docker-k8s-apimessage
   template:
     metadata:
-      name: docker-k8s-apidemo-deployment
+      name: docker-k8s-apimessage-deployment
       labels:
-        app: docker-k8s-apidemo
+        app: docker-k8s-apimessage
     spec:
       containers:
-      - image: luizcssoares/dockerapidemo
-        name: docker-k8s-apidemo
+      - image: luizcssoares/apirestmessage
+        name: docker-k8s-apimessage
         ports:
-        - containerPort: 8088
-        volumeMounts: 
-          - name: jenkins-home
-            mountPath: jenkins_home  
-      volumes: 
-        - name: jenkins-home 
-          hostPath:
-            path: /C/WINDOWS/system32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/RestApiDemoPipeline/
-            type: Directory        
+        - containerPort: 8088                
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: docker-k8s-apidemo
-  name: docker-k8s-apidemo-service
+    app: docker-k8s-apimessage
+  name: docker-k8s-apimessage-service
 spec:
   ports:
     - port: 88
       targetPort: 8088
   selector:
-    app: docker_k8s-apidemo
+    app: docker_k8s-apimessage
   type: LoadBalancer
