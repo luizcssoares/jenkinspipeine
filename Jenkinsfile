@@ -1,4 +1,4 @@
-pipeline {      
+pipeline {
       environment {
 	     registry = 'luizcssoares/apirestmessage'    
              dockerhub_credentials = 'luizcssoares-dockerhub'
