@@ -13,7 +13,7 @@ pipeline {
 	      }
 	      stage('Build Maven') {		
 		      steps {
-		           sh 'mvn package -Dmaven.test.skip=true'     
+		           sh 'mvn clean package -Dmaven.test.skip=true'     
 		      }
 	      }	
 	      stage('Docker Build'){
