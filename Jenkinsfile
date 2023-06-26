@@ -40,7 +40,7 @@ pipeline {
 	      }		  
 	      stage('Kubernetes'){
 		     steps {
-		           sh 'kubectl apply -f deployment.yml'
+		           sh 'kubectl apply -f docker-k8s-apimessage.yaml'
 		     }
 	      }	        
       }  
