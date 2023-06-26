@@ -1,1 +1,44 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: docker-k8s-apidemo
+  name: docker-k8s-apidemo
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: docker-k8s-apidemo
+  template:
+    metadata:
+      name: docker-k8s-apidemo-deployment
+      labels:
+        app: docker-k8s-apidemo
+    spec:
+      containers:
+      - image: luizcssoares/dockerapidemo
+        name: docker-k8s-apidemo
+        ports:
+        - containerPort: 8088
+        volumeMounts: 
+          - name: jenkins-home
+            mountPath: jenkins_home  
+      volumes: 
+        - name: jenkins-home 
+          hostPath:
+            path: /C/WINDOWS/system32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/RestApiDemoPipeline/
+            type: Directory        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: docker-k8s-apidemo
+  name: docker-k8s-apidemo-service
+spec:
+  ports:
+    - port: 88
+      targetPort: 8088
+  selector:
+    app: docker_k8s-apidemo
+  type: LoadBalancer
