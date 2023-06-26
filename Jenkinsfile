@@ -1,7 +1,7 @@
 pipeline {      
       environment {
 	     registry = 'luizcssoares/apirestmessage'    
-             dockerhub_creentials = 'luizcssoares-dockerhub'
+             dockerhub_credentials = 'luizcssoares-dockerhub'
 	     docker_image = ''     
       }	 
       agent any
@@ -26,7 +26,7 @@ pipeline {
 	      stage('Deploy our image') {
 		      steps{
 			    script {
-				     docker.withRegistry( '', dockerhub_creentials ) {
+				     docker.withRegistry( '', dockerhub_credentials ) {
 			              docker_image.push()
 			          }						
 			    }
@@ -40,7 +40,7 @@ pipeline {
 	      }		  
 	      stage('Kubernetes'){
 		     steps {
-		           bat 'kubectl apply -f deployment.yml'
+		           sh 'kubectl apply -f deployment.yml'
 		     }
 	      }	        
       }  
